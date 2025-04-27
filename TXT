@@ -112,6 +112,7 @@ local function updateCounts()
         local ballsCount = 0
         local strikesCount = 0
 
+        -- Count the visible balls
         for i = 1, 3 do
             local ball = board.Count.Balls:FindFirstChild(tostring(i))
             if ball and ball.Visible then
@@ -119,6 +120,7 @@ local function updateCounts()
             end
         end
 
+        -- Count the visible strikes
         for i = 1, 2 do
             local strike = board.Count.Strikes:FindFirstChild(tostring(i))
             if strike and strike.Visible then
@@ -129,16 +131,19 @@ local function updateCounts()
         totalBalls = totalBalls + ballsCount
         totalStrikes = totalStrikes + strikesCount
 
-        -- Write to unique txt file for counts
-        local countContent = string.format("CurrentCount: %s-%s, TotalBalls: %s, TotalStrikes: %s",
-            ballsCount, strikesCount, totalBalls, totalStrikes)
-        writefile("Counts.txt", countContent)
+        -- Write individual .txt files for balls, strikes, and total counts
+        writefile("Balls.txt", tostring(ballsCount))  -- Write the current balls count
+        writefile("Strikes.txt", tostring(strikesCount))  -- Write the current strikes count
+        writefile("TotalBalls.txt", tostring(totalBalls))  -- Write the total balls count
+        writefile("TotalStrikes.txt", tostring(totalStrikes))  -- Write the total strikes count
+        writefile("CurrentCount.txt", string.format("%s-%s", ballsCount, strikesCount))  -- Write the current count (balls-strikes)
     end)
 
     if not success then
         warn("[HCBB API] Failed to update counts: " .. tostring(err))
     end
 end
+
 
 --// MAIN LOOP
 print("[HCBB API] System Initialized Successfully.")
