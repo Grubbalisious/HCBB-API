@@ -394,4 +394,13 @@ To learn more about the **HCBB League**, its teams, and gameplay mechanics, or i
 
 Feel free to report any issues, stay updated on new features, or simply join the community to connect with other players and developers!
 
+# 🙌 Contributors
+This project wouldn't have been possible without the efforts of the following people:
+
+Eco – Lead developer and maintainer. After Byfron security updates, Eco fully rewrote and modernized the scripts to work with the HCBB API, ensuring everything remained functional.
+
+Woofy – Created the original foundation of the scripts before Byfron was introduced. His early work served as the basis for everything that came after.
+
+Special thanks to everyone who helped make this project possible!
+
 
