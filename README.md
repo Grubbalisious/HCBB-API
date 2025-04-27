@@ -114,6 +114,4 @@ This project is just getting started, and **more updates, features, and improvem
 
 Stay tuned for better pitcher/batter support, automatic player detection, improved base handling, and full game archiving features.
 
----
 
-Let me know if you need further modifications or additional info!
