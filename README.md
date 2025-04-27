@@ -185,22 +185,22 @@ _G.BaseEmpty = "PATH/TO/YOUR/EMPTY/BASE/IMAGE"
 ```
 
 ⚡ **IMPORTANT**:  
-Roblox will strip out backslashes (`\`) when exporting assets.
+Roblox will strip out forwardslashes (`/`) when exporting assets.
 
-If your image paths already contain a backslash (`\`), **double it** wherever you see it to avoid errors.  
+If your image paths already contain a forwardslash (`/`), **double it** wherever you see it to avoid errors.  
 For example:
 
-**Correct way**: `Images\\BaseOn.png`  
-**Wrong way**: `Images\BaseOn.png`
+**Correct way**: `Images//BaseOn.png`  
+**Wrong way**: `Images/BaseOn.png`
 
-Always add an extra `\` when setting your `BaseOn` and `BaseEmpty` paths!
+Always add an extra `/` when setting your `BaseOn` and `BaseEmpty` paths!
 
 ### Step 2: Load the API
 
 After setting your variables, load the script using the following **loadstring**:
 
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Grubbalisious/HCBB-API/refs/heads/main/MAIN"))()
+loadstring(game:HttpGet("http://raw.githubusercontent.com/Grubbalisious/HCBB-API/refs/heads/main/TXT"))()
 ```
 
 This will automatically set up the trackers and begin saving your data locally.
@@ -212,7 +212,7 @@ _G.User = "YOUR_USERNAME_HERE"
 _G.BaseOn = "PATH/TO/YOUR/BASE/ON/IMAGE"
 _G.BaseEmpty = "PATH/TO/YOUR/EMPTY/BASE/IMAGE"
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Grubbalisious/HCBB-API/refs/heads/main/MAIN"))()
+loadstring(game:HttpGet("http://raw.githubusercontent.com/Grubbalisious/HCBB-API/refs/heads/main/TXT"))()
 ```
 
 ---
