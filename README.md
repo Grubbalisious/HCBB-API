@@ -370,4 +370,28 @@ This project is just getting started, and **more updates, features, and improvem
 
 Stay tuned for better pitcher/batter support, automatic player detection, improved base handling, and full game archiving features.
 
+Thanks for the correction! Here’s the updated version with the proper terminology:
+
+---
+
+## 🐞 **Reporting Bugs and Getting Support**
+
+If you encounter any issues, bugs, or need support with the **HCBB-API**, **HCBB game**, or **HCBB league**, you can reach out through the following channels:
+
+### 📢 **Bug Reports**
+If you find any bugs or issues with the **HCBB-API** or related scripts, please report them in our **Bug Reporting Discord**. You can join the server using the link below:
+- [**Bug Reporting Discord**](https://discord.gg/bZayTrQGAJ)
+
+### ⚾ **HCBB Game**
+If you're looking to play the **HCBB 9v9 2.0** game, which integrates features from the API, you can join and play the game on Roblox by visiting the following link:
+- [**Play HCBB Game**](https://www.roblox.com/games/7830150255/HCBB-9v9-2-0)
+
+### ⚾ **HCBB League**
+To learn more about the **HCBB League**, its teams, and gameplay mechanics, or if you're interested in joining the league, you can check out the official **HCBB League Discord**:
+- [**HCBB League Discord**](https://discord.gg/J3tprJY6aQ)
+
+---
+
+Feel free to report any issues, stay updated on new features, or simply join the community to connect with other players and developers!
+
 
