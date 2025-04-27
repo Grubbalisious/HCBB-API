@@ -130,8 +130,9 @@ local function updateCounts()
         totalStrikes = totalStrikes + strikesCount
 
         -- Write to unique txt file for counts
-        writefile("Counts.txt", string.format("CurrentCount: %s-%s, TotalBalls: %s, TotalStrikes: %s",
-            ballsCount, strikesCount, totalBalls, totalStrikes))
+        local countContent = string.format("CurrentCount: %s-%s, TotalBalls: %s, TotalStrikes: %s",
+            ballsCount, strikesCount, totalBalls, totalStrikes)
+        writefile("Counts.txt", countContent)
     end)
 
     if not success then
