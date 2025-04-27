@@ -98,6 +98,153 @@ Each file is updated approximately **once every second**, ensuring near-real-tim
 
 ---
 
+## 📂 Overview of TXT Files
+
+The **HCBB-API** system generates **four** main TXT files to track and log real-time game data. These files are regularly updated and stored locally for external usage, such as for overlays, broadcasts, or advanced analysis. The TXT files created are:
+
+1. **`Base1.txt`**, **`Base2.txt`**, **`Base3.txt`**
+   - Tracks base runner statuses for 1st, 2nd, and 3rd base.
+2. **`CurrentCount.txt`**
+   - Tracks the current ball and strike count.
+3. **`TotalBalls.txt`** and **`TotalStrikes.txt`**
+   - Tracks total balls and strikes throughout the game.
+4. **`Pitcher.txt`**, **`PitcherBB.txt`**, **`PitcherERA.txt`**, **`PitcherWHIP.txt`**
+   - Tracks pitcher stats, such as Walks, ERA, and WHIP.
+5. **`Batter.txt`**, **`BatterHR.txt`**, **`BatterRBI.txt`**, **`BatterOPS.txt`**, **`BatterAVG.txt`**
+   - Tracks batter stats like Home Runs, RBIs, OPS, and Batting Average.
+6. **`HomeScore.txt`** and **`AwayScore.txt`**
+   - Tracks the home and away team scores.
+
+---
+
+## 📂 File Descriptions
+
+Each of these TXT files has its specific purpose and data they track. Here’s what each one does:
+
+### 1. **`Base1.txt`, `Base2.txt`, `Base3.txt`**
+
+- **Purpose**: These files track whether each of the bases (1st, 2nd, and 3rd) is occupied or empty. They also store the image path for visual representation, showing whether a base is occupied or not.
+- **Usage**: These files are helpful for tracking base runner statuses during the game. They can be used for game overlays or game analysis.
+
+---
+
+### 2. **`CurrentCount.txt`**
+
+- **Purpose**: This file tracks the **current ball and strike count** in the format `balls-strikes` (e.g., `3-2`).
+- **Usage**: This file is useful for broadcasts or overlays, showing the current count of the batter.
+
+---
+
+### 3. **`TotalBalls.txt`** and **`TotalStrikes.txt`**
+
+- **Purpose**: These files track the **total number of balls** and **total number of strikes** throughout the game.
+- **Usage**: These files are important for providing a summary of the game's pitch statistics, useful for analysis or broadcasts.
+
+---
+
+### 4. **`Pitcher.txt`, `PitcherBB.txt`, `PitcherERA.txt`, `PitcherWHIP.txt`**
+
+- **Purpose**: These files track **pitcher statistics**:
+  - **`Pitcher.txt`**: Stores the name of the pitcher.
+  - **`PitcherBB.txt`**: Tracks the number of walks issued by the pitcher.
+  - **`PitcherERA.txt`**: Tracks the pitcher's ERA (Earned Run Average).
+  - **`PitcherWHIP.txt`**: Tracks the pitcher's WHIP (Walks plus Hits per Inning Pitched).
+- **Usage**: These files provide essential pitching data, useful for detailed game analysis, performance tracking, and broadcasts.
+
+---
+
+### 5. **`Batter.txt`, `BatterHR.txt`, `BatterRBI.txt`, `BatterOPS.txt`, `BatterAVG.txt`**
+
+- **Purpose**: These files track **batter statistics**:
+  - **`Batter.txt`**: Stores the name of the current batter.
+  - **`BatterHR.txt`**: Tracks the number of home runs hit by the batter.
+  - **`BatterRBI.txt`**: Tracks the number of RBIs (Runs Batted In) by the batter.
+  - **`BatterOPS.txt`**: Tracks the batter's OPS (On-base Plus Slugging).
+  - **`BatterAVG.txt`**: Tracks the batter's batting average.
+- **Usage**: These files are useful for player performance tracking, game analysis, and overlays in live broadcasts.
+
+---
+
+### 6. **`HomeScore.txt`** and **`AwayScore.txt`**
+
+- **Purpose**: These files track the **home** and **away** team scores during the game.
+- **Usage**: These files are useful for displaying the score on overlays or for score tracking during broadcasts.
+
+---
+
+## 🛠️ **How to Use the HCBB-API**
+
+### Step 1: Set Your Variables
+
+Before loading the API, you’ll need to configure some global variables. This is done by setting these variables before calling the main script:
+
+```lua
+_G.User = "YOUR_USERNAME_HERE"
+_G.BaseOn = "PATH/TO/YOUR/BASE/ON/IMAGE"
+_G.BaseEmpty = "PATH/TO/YOUR/EMPTY/BASE/IMAGE"
+```
+
+⚡ **IMPORTANT**:  
+Roblox will strip out backslashes (`\`) when exporting assets.
+
+If your image paths already contain a backslash (`\`), **double it** wherever you see it to avoid errors.  
+For example:
+
+**Correct way**: `Images\\BaseOn.png`  
+**Wrong way**: `Images\BaseOn.png`
+
+Always add an extra `\` when setting your `BaseOn` and `BaseEmpty` paths!
+
+### Step 2: Load the API
+
+After setting your variables, load the script using the following **loadstring**:
+
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Grubbalisious/HCBB-API/refs/heads/main/MAIN"))()
+```
+
+This will automatically set up the trackers and begin saving your data locally.
+
+At the end it should look like:
+
+```lua
+_G.User = "YOUR_USERNAME_HERE"
+_G.BaseOn = "PATH/TO/YOUR/BASE/ON/IMAGE"
+_G.BaseEmpty = "PATH/TO/YOUR/EMPTY/BASE/IMAGE"
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Grubbalisious/HCBB-API/refs/heads/main/MAIN"))()
+```
+
+---
+
+## 📝 **What Will Be Created**
+
+When you use the **HCBB-API**, it will generate and update several `.txt` files in your local folder:
+
+| File Name              | Description                                                      |
+| ---------------------- | ---------------------------------------------------------------- |
+| **Base1.txt**           | Tracks the status of 1st base (occupied or empty).              |
+| **Base2.txt**           | Tracks the status of 2nd base (occupied or empty).              |
+| **Base3.txt**           | Tracks the status of 3rd base (occupied or empty).              |
+| **CurrentCount.txt**    | Tracks the current ball-strike count for the current batter.    |
+| **TotalBalls.txt**      | Tracks the total balls thrown throughout the game.              |
+| **TotalStrikes.txt**    | Tracks the total strikes thrown throughout the game.            |
+| **Pitcher.txt**         | Stores the name of the current pitcher.                         |
+| **PitcherBB.txt**       | Tracks the number of walks issued by the current pitcher.      |
+| **PitcherERA.txt**      | Tracks the ERA (Earned Run Average) of the current pitcher.     |
+| **PitcherWHIP.txt**     | Tracks the WHIP (Walks plus Hits per Inning Pitched) of the pitcher. |
+| **Batter.txt**          | Stores the name of the current batter.                          |
+| **BatterHR.txt**        | Tracks the number of home runs by the current batter.           |
+| **BatterRBI.txt**       | Tracks the number of RBIs by the current batter.                |
+| **BatterOPS.txt**       | Tracks the OPS (On-base Plus Slugging) of the current batter.   |
+| **BatterAVG.txt**       | Tracks the batting average of the current batter.               |
+| **HomeScore.txt**       | Tracks the score of the home team.                              |
+| **AwayScore.txt**       | Tracks the score of the away team.                              |
+
+Each file is updated approximately **once every second**, ensuring near-real-time tracking.
+---
+
+
 ## 🛠️ **Known Issues**
 
 While the HCBB-API is fully operational, there are a few bugs being addressed:
