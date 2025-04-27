@@ -1,0 +1,73 @@
+local renderstep = game:GetService("RunService").RenderStepped
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+
+-- Use the global _G.User variable to dynamically find the player
+local player = Players:FindFirstChild(_G.User)  -- Replace with dynamic player ID from HCBB-API
+
+if not player then
+    warn("Player " .. _G.User .. " not found!")
+    return
+end
+
+local cam = workspace.CurrentCamera
+local FocusPart = game:GetService("Workspace").Plates.HomePlate.HomePlate
+local enabled = false
+local originalCameraType -- Store the original camera type before switching
+
+-- Positions and FOVs mapping (you can adjust these positions based on your preference)
+local positionsAndFOVs = {
+    [Vector3.new(0, 70, -320)] = 5,  -- Home plate view
+    [Vector3.new(175, 10, -96.679)] = 60,  -- Aerial view 1
+    [Vector3.new(-185, 40.852, -20.914)] = 7,  -- Aerial view 2
+    [Vector3.new(-175, 10, 196.679)] = 3,  -- Side view 1
+    [Vector3.new(170, 40, -20)] = 70,  -- Side view 2
+    [Vector3.new(200, 40, 50)] = 80, -- Additional angle based on preference
+}
+
+local position = Vector3.new(0, 70, -320)  -- Default starting position
+
+-- Function to handle key presses for camera angles
+local function handleKeyDown(key)
+    if key == "1" then
+        position = Vector3.new(0, 70, -320)  -- Home plate view
+        cam.FieldOfView = positionsAndFOVs[position]
+    elseif key == "2" then
+        position = Vector3.new(175, 10, -96.679)  -- Aerial view 1
+        cam.FieldOfView = positionsAndFOVs[position]
+    elseif key == "3" then
+        position = Vector3.new(-185, 40.852, -20.914)  -- Aerial view 2
+        cam.FieldOfView = positionsAndFOVs[position]
+    elseif key == "4" then
+        position = Vector3.new(-175, 10, 196.679)  -- Side view 1
+        cam.FieldOfView = positionsAndFOVs[position]
+    elseif key == "5" then
+        position = Vector3.new(170, 40, -20)  -- Side view 2
+        cam.FieldOfView = positionsAndFOVs[position]
+    elseif key == "6" then
+        position = Vector3.new(200, 80, 50)  -- New view angle
+        cam.FieldOfView = positionsAndFOVs[position]
+    elseif key == "z" then
+        -- Toggle custom camera mode
+        if enabled then
+            enabled = false
+            cam.CameraType = originalCameraType
+        else
+            enabled = true
+            originalCameraType = cam.CameraType
+            cam.CameraType = Enum.CameraType.Scriptable
+            cam.CFrame = CFrame.new(position, FocusPart.Position)
+        end
+    end
+end
+
+-- Render loop to keep the camera position updated
+renderstep:Connect(function()
+    if enabled then
+        -- Custom camera mode is active, keep it updated
+        cam.CFrame = CFrame.new(position, FocusPart.Position)  -- Focus on home plate or specific target
+    end
+end)
+
+-- Connect key input to the dynamically found player (using _G.User)
+player:GetMouse().KeyDown:Connect(handleKeyDown)
