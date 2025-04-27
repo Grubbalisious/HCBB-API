@@ -1,4 +1,4 @@
-# 📊 **HCBB-API CSV Documentation**
+# 📊 **HCBB-API Documentation**
 
 ---
 
