@@ -73,6 +73,15 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Grubbalisious/HCBB-AP
 
 This will automatically set up the trackers and begin saving your data locally.
 
+At the end it should look like: 
+
+```lua
+_G.User = "YOUR_USERNAME_HERE"
+_G.BaseOn = "PATH/TO/YOUR/BASE/ON/IMAGE"
+_G.BaseEmpty = "PATH/TO/YOUR/EMPTY/BASE/IMAGE"
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Grubbalisious/HCBB-API/refs/heads/main/MAIN"))()
+```
 ---
 
 ## 📝 **What Will Be Created**
