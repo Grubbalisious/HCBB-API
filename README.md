@@ -242,6 +242,64 @@ When you use the **HCBB-API**, it will generate and update several `.txt` files 
 | **AwayScore.txt**       | Tracks the score of the away team.                              |
 
 Each file is updated approximately **once every second**, ensuring near-real-time tracking.
+
+Here’s the documentation for the modified script that integrates with the **HCBB-API** using the global `_G.User` variable:
+
+---
+
+## 📝 **Documentation for Hiding Player GUI Elements**
+
+### 📂 **Purpose**
+This script is used to target a player and hide all GUI elements within their `PlayerGui`. It is designed to work with the **HCBB-API**, dynamically using the global `_G.User` variable for the player's username.
+
+### 🛠️ **How the Script Works**
+- **Targeting the Player:** The script targets the player based on the username provided in the global `_G.User` variable.
+- **Looping through GUI Elements:** It loops through all GUI elements in the player's `PlayerGui`, specifically searching for `ScreenGui` elements.
+- **Hiding GUI Elements:** For every child GUI element within a `ScreenGui`, the script sets their `Visible` property to `false`, effectively hiding them from the player.
+
+### 🏗️ **How to Use the Script**
+
+1. **Set the Player’s Username**  
+   Before running the script, make sure to set the `_G.User` variable to the username of the player you want to target. You can do this by adding the following line at the beginning of your script:
+   
+   ```lua
+   _G.User = "your_player_username_here"
+   ```
+
+   ⚡ **IMPORTANT**: Replace `"your_player_username_here"` with the actual username of the player you want to target.
+
+2. **Integrating the Script**  
+   Once the username is set, use the script below to hide the GUI elements of the specified player. This will automatically reference the player based on the `_G.User` value.
+
+   ```lua
+   -- Use the global _G.User variable to get the player's username from the HCBB-API settings
+   local player = game:GetService("Players")[_G.User]
+
+   -- Check if the player exists
+   if player then
+       -- Loop through all GUI elements in the player's PlayerGui
+       for i, v in pairs(player.PlayerGui:GetChildren()) do
+           -- Check if the element is a ScreenGui
+           if v:IsA("ScreenGui") then
+               -- Loop through all children of the ScreenGui and hide them
+               for _, guiElement in pairs(v:GetChildren()) do
+                   if guiElement:IsA("GuiObject") then
+                       guiElement.Visible = false  -- Hide the GUI element
+                   end
+               end
+           end
+       end
+   else
+       print("Player '" .. _G.User .. "' not found")
+   end
+   ```
+
+### 🚨 **Important Notes**
+- **Setting the Username**: Be sure to set the `_G.User` variable to the correct player's username. This ensures the script targets the correct player and hides their GUI elements.
+  
+- **Compatibility with HCBB-API**: This script is designed to work seamlessly with the **HCBB-API**. It uses the `_G.User` global variable to retrieve the player's username, making it easy to integrate into your existing HCBB-API setup.
+
+
 ---
 
 
