@@ -1,0 +1,150 @@
+repeat wait() until game:IsLoaded()
+
+--// SETTINGS
+local username = _G.User or "4fty9"
+local baseOnPath = _G.BaseOn or "C:\\Users\\Meche\\Downloads\\ER\\workspace\\Base On.png"
+local baseEmptyPath = _G.BaseEmpty or "C:\\Users\\Meche\\Downloads\\ER\\workspace\\Empty Base.png"
+
+--// REFERENCES
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+
+local player = Players:FindFirstChild(username)
+if not player then
+    warn("[HCBB API] Player '" .. username .. "' not found.")
+    return
+end
+
+local playerGui = player:WaitForChild("PlayerGui")
+local scoreboard = playerGui:WaitForChild("Scoreboard")
+local scoreHolder = scoreboard:WaitForChild("ScoreHolder")
+local board = scoreHolder:WaitForChild("Scoreboard")
+
+local baseOuts = board:WaitForChild("BaseOuts")
+local base = baseOuts:WaitForChild("Base")
+
+--// BASES SYSTEM
+local function getBaseEmoji(visible)
+    return visible and baseOnPath or baseEmptyPath
+end
+
+local function updateBase(baseNumber, baseVisible)
+    local content = getBaseEmoji(baseVisible)
+    writefile("Base" .. baseNumber .. ".txt", content)  -- Write to a unique .txt file for each base
+end
+
+local function updateBases()
+    local success, err = pcall(function()
+        local b1 = base:WaitForChild("B1").Visible
+        local b2 = base:WaitForChild("B2").Visible
+        local b3 = base:WaitForChild("B3").Visible
+
+        updateBase(1, b1)
+        updateBase(2, b2)
+        updateBase(3, b3)
+    end)
+
+    if not success then
+        warn("[HCBB API] Failed to update bases: " .. tostring(err))
+    end
+end
+
+--// STATS SYSTEM
+local function updateStats()
+    local success, err = pcall(function()
+        local homeScore = Workspace.ScoreBoard.Board.SG.F.Score.Home.Score.Text
+        local awayScore = Workspace.ScoreBoard.Board.SG.F.Score.Away.Score.Text
+
+        local Batter = Workspace.ScoreBoard.Board.SG.F.B.PlayerInfo.Nam.Title.Text
+        local BatterHR = Workspace.ScoreBoard.Board.SG.F.B.Stats.HR.Amount.Num.Text
+        local BatterRBI = Workspace.ScoreBoard.Board.SG.F.B.Stats.RBI.Amount.Num.Text
+        local BatterOPS = Workspace.ScoreBoard.Board.SG.F.B.Stats.OPS.Amount.Num.Text
+        local BatterAVG = Workspace.ScoreBoard.Board.SG.F.B.Stats.BA.Amount.Num.Text
+
+        local Batter2 = Workspace.ScoreBoard.Board.SG.F.B2.PlayerInfo.Nam.Title.Text
+        local BatterHR2 = Workspace.ScoreBoard.Board.SG.F.B2.Stats.HR.Amount.Num.Text
+        local BatterRBI2 = Workspace.ScoreBoard.Board.SG.F.B2.Stats.RBI.Amount.Num.Text
+        local BatterOPS2 = Workspace.ScoreBoard.Board.SG.F.B2.Stats.OPS.Amount.Num.Text
+        local BatterAVG2 = Workspace.ScoreBoard.Board.SG.F.B2.Stats.BA.Amount.Num.Text
+
+        local FinalBatter = Batter2 ~= "" and Batter2 or Batter
+        local FinalHR = BatterHR2 ~= "" and BatterHR2 or BatterHR
+        local FinalRBI = BatterRBI2 ~= "" and BatterRBI2 or BatterRBI
+        local FinalOPS = BatterOPS2 ~= "" and BatterOPS2 or BatterOPS
+        local FinalAVG = BatterAVG2 ~= "" and BatterAVG2 or BatterAVG
+
+        local Pitcher = Workspace.ScoreBoard.PBoard.PG.F.B.PlayerInfo.Nam.Title.Text
+        local PitcherBB = Workspace.ScoreBoard.PBoard.PG.F.B.Stats1.BB.Amount.Num.Text
+        local PitcherERA = Workspace.ScoreBoard.PBoard.PG.F.B.Stats1.ERA.Amount.Num.Text
+        local PitcherWHIP = Workspace.ScoreBoard.PBoard.PG.F.B.Stats2.WHIP.Amount.Num.Text
+
+        local pitchCount = scoreboard.ScoreHolder.Scoreboard.PCount.TextLabel.Text
+
+        -- Write to unique txt files for each stat
+        writefile("Pitcher.txt", Pitcher)
+        writefile("PitcherBB.txt", PitcherBB)
+        writefile("PitcherERA.txt", PitcherERA)
+        writefile("PitcherWHIP.txt", PitcherWHIP)
+        writefile("PitchCount.txt", pitchCount)
+
+        writefile("HomeScore.txt", homeScore)
+        writefile("AwayScore.txt", awayScore)
+
+        writefile("Batter.txt", FinalBatter)
+        writefile("BatterHR.txt", FinalHR)
+        writefile("BatterRBI.txt", FinalRBI)
+        writefile("BatterOPS.txt", FinalOPS)
+        writefile("BatterAVG.txt", FinalAVG)
+    end)
+
+    if not success then
+        warn("[HCBB API] Failed to update stats: " .. tostring(err))
+    end
+end
+
+--// COUNTS SYSTEM
+local totalBalls = 0
+local totalStrikes = 0
+
+local function updateCounts()
+    local success, err = pcall(function()
+        local ballsCount = 0
+        local strikesCount = 0
+
+        for i = 1, 3 do
+            local ball = board.Count.Balls:FindFirstChild(tostring(i))
+            if ball and ball.Visible then
+                ballsCount = ballsCount + 1
+            end
+        end
+
+        for i = 1, 2 do
+            local strike = board.Count.Strikes:FindFirstChild(tostring(i))
+            if strike and strike.Visible then
+                strikesCount = strikesCount + 1
+            end
+        end
+
+        totalBalls = totalBalls + ballsCount
+        totalStrikes = totalStrikes + strikesCount
+
+        -- Write to unique txt file for counts
+        writefile("Counts.txt", string.format("CurrentCount: %s-%s, TotalBalls: %s, TotalStrikes: %s",
+            ballsCount, strikesCount, totalBalls, totalStrikes))
+    end)
+
+    if not success then
+        warn("[HCBB API] Failed to update counts: " .. tostring(err))
+    end
+end
+
+--// MAIN LOOP
+print("[HCBB API] System Initialized Successfully.")
+while true do
+    updateBases()
+    updateStats()
+    updateCounts()
+    print("[HCBB API] Updated.")
+    wait(1)
+end
