@@ -299,6 +299,48 @@ This script is used to target a player and hide all GUI elements within their `P
   
 - **Compatibility with HCBB-API**: This script is designed to work seamlessly with the **HCBB-API**. It uses the `_G.User` global variable to retrieve the player's username, making it easy to integrate into your existing HCBB-API setup.
 
+Sure! Here's the updated documentation with that clarification:
+
+---
+
+## 📄 **Documentation for Dynamic Camera Control Script (with HCBB-API Integration)**
+
+### 📝 **Purpose**
+This script allows you to control the camera angles and toggle a custom camera mode for a specific player. The player's username is dynamically retrieved using the **HCBB-API** by referencing the global `_G.User` variable, so you do not need to set the player’s username manually.
+
+### 🛠️ **How the Script Works**
+
+1. **Targeting the Player:**
+   The script dynamically finds the player using the global `_G.User` variable. If you're using the **HCBB-API**, the player's username will already be set via the API, so there’s no need for you to manually set it.
+
+2. **Setting Camera Views:**
+   The script provides different camera views based on key presses:
+   - Press `1` to focus on the home plate view.
+   - Press `2`, `3`, `4`, `5`, or `6` to switch between different aerial, side, or custom views.
+   - Press `z` to toggle a custom scriptable camera mode.
+
+3. **Custom Camera Mode:**
+   When toggled on, the camera becomes scriptable, and its position updates according to the selected viewpoint. The camera will continue to focus on the `HomePlate` or any other target you choose.
+
+4. **Real-Time Updates:**
+   The camera position is updated in real-time using `RenderStepped`, ensuring smooth transitions as the player switches camera views.
+
+### 🏗️ **How to Use**
+
+1. **Running the Script:**
+   Since the **HCBB-API** already handles setting the `_G.User` variable, you do not need to manually specify the player's username.
+
+   To run the script, you can simply load it using **loadstring** to execute it dynamically:
+
+   ```lua
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/Grubbalisious/HCBB-API/refs/heads/main/CAMERA"))()
+   ```
+
+   This will load and execute the script that allows you to control the camera in real-time for the specified player.
+
+### 🚨 **Important Notes**
+- **Player Must Be Online:** The script only works if the player with the username set in `_G.User` is currently in the game.
+- **Camera Updates in Real-Time:** The script continuously updates the camera's position using `RenderStepped`, ensuring that the camera follows the selected viewpoint dynamically.
 
 ---
 
